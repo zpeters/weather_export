@@ -48,6 +48,7 @@ func main() {
 	fmt.Printf("weather_humidity %f\n", weather.Main.Humidity)
 
 	// TODO create this as a http server
+	// TODO test local
 	// TODO create a container file
 	// TODO make a kubernetes deploy file
 	// TODO fill in readme with env vars, build, deploy ...
