@@ -10,7 +10,6 @@ import (
 )
 
 var apiKey = os.Getenv("OPEN_WEATHER_API_KEY")
-var zipCode = "39110"
 
 type MainWeather struct {
 	Temp     float32 `json:"temp"`
@@ -26,7 +25,8 @@ type Weather struct {
 }
 
 func getWeather(w http.ResponseWriter, req *http.Request) {
-	log.Printf("Got weather request %s\n", req.RemoteAddr)
+	zipCode := req.URL.Query().Get("zipcode")
+	log.Printf("Got weather request from %s for %s\n", req.RemoteAddr, zipCode)
 	url := fmt.Sprintf("https://api.openweathermap.org/data/2.5/weather?units=imperial&zip=%s,us&appid=%s", zipCode, apiKey)
 	resp, err := http.Get(url)
 	if err != nil {
@@ -53,8 +53,6 @@ func getWeather(w http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
-	// TODO confiugrable location
-	// TODO fill in readme with env vars, build, deploy ...
 	http.HandleFunc("/metrics", getWeather)
 	log.Println("Serving on port 9163")
 	log.Fatal(http.ListenAndServe(":9163", nil))
