@@ -38,9 +38,17 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	fmt.Printf("%s\n", body)
-
 	var weather Weather
 	json.Unmarshal(body, &weather)
-	fmt.Printf("%#v\n", weather)
+
+	fmt.Printf("weather_location %s\n", weather.Name)
+	fmt.Printf("weather_tempf %f\n", weather.Main.TempF)
+	fmt.Printf("weather_tempf_max %f\n", weather.Main.TempFMax)
+	fmt.Printf("weather_tempf_min %f\n", weather.Main.TempFMin)
+	fmt.Printf("weather_humidity %f\n", weather.Main.Humidity)
+
+	// TODO create this as a http server
+	// TODO create a container file
+	// TODO make a kubernetes deploy file
+	// TODO fill in readme with env vars, build, deploy ...
 }
